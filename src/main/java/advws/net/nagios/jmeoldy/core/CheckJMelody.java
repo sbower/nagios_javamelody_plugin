@@ -25,10 +25,10 @@ public class CheckJMelody {
 	private final static String USED_MEMORY = "usedMemory";               		//usedMemory
 	private final static String USED_NON_HEAP_MEMORY = "usedNonHeapMemory"; 	//usedNonHeapMemory
 	
-	public static void main(String[] args) {
-	    SimpleCommandLineParser parser = new SimpleCommandLineParser(args);
-	    String rrdPath = parser.getValue("rrdpath", "rrd", "r");
-	    
+	public int checkRRD(String[] args) {
+		SimpleCommandLineParser parser = new SimpleCommandLineParser(args);
+		String rrdPath = parser.getValue("rrdpath", "rrd", "r");
+		
 		boolean ac = parser.containsKey("activeconnections", "ac");
 		boolean at = parser.containsKey("activethreads", "at");
 		boolean gc = parser.containsKey("gc", "g");
@@ -54,7 +54,7 @@ public class CheckJMelody {
 		if (parser.containsKey("c")) {
 			critical = Double.parseDouble(parser.getValue("c"));
 		}
-
+		
 		try {
 			
 			String dsName = "";
@@ -89,7 +89,7 @@ public class CheckJMelody {
 			} else if (usedNonHeap) {
 				dsName = USED_NON_HEAP_MEMORY;
 			}
-
+		
 			RrdDb db = new RrdDb(rrdPath + "/" + dsName + ".rrd");
 			double value = db.getLastDatasourceValue(dsName);
 			
@@ -100,23 +100,30 @@ public class CheckJMelody {
 				
 				if (value > critical) {
 					System.out.println(textOutput + " CRITICAL " + perfData);
-					System.exit(2);
+					return 2;
 				} else if (value > warning ){
 					System.out.println(textOutput + " WARNING " + perfData);
-					System.exit(1);
+					return 1;
 				} 
 			} 
 			
 			System.out.println(textOutput + " OK " + perfData);
-			System.exit(0);
+			return 0;
 			
 		} catch (IOException e) {
 			System.out.println(e.toString());
-			System.exit(3);
+			return 3;
 		} catch (RrdException e) {
 			System.out.println(e.toString());
-			System.exit(3);
+			return 3;
 		}
+	}
+	
+	public static void main(String[] args) {
+	  CheckJMelody cm = new CheckJMelody();
+	  
+	  int retVal = cm.checkRRD(args);
+	  System.exit(retVal);
 	}
 	
 	private static String convertDoubleToString(double d) {
