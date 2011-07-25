@@ -8,7 +8,8 @@ Installation
 
 Before installation you will need to have java 1.5 or higher.
 
-```wget https://github.com/downloads/sbower/nagios_javamelody_plugin/javamelody_plugin.tar.gz
+```
+wget https://github.com/downloads/sbower/nagios_javamelody_plugin/javamelody_plugin.tar.gz
 tar xzvf javamelody_plugin.tar.gz
 mv javamelody_plugin/* /usr/local/nagios/libexec
 ```
@@ -24,11 +25,12 @@ First define a command in /etc/nagios/commands.cfg.
 
 Setting a command to check local heap
 
-$ARG1$ -- warning level
-$ARG2$ -- critical level
-$ARG3$ -- war name (Verify this in your tomcat temp folder)
+$ARG1$ -- warning level <br />
+$ARG2$ -- critical level <br />
+$ARG3$ -- war name (Verify this in your tomcat temp folder) <br />
 
-```# 'check_locale_heap' command definition
+```
+# 'check_locale_heap' command definition
 define command{
         command_name    check_heap
         command_line    $USER1$/check_jmelody -r /usr/local/tomcat/temp/javamelody/$ARG3$/ -uh -w $ARG1$ -c $ARG2$
