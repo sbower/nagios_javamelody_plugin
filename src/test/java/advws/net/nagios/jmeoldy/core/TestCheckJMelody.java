@@ -3,7 +3,9 @@ package advws.net.nagios.jmeoldy.core;
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.PrintStream;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -39,7 +41,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testActiveConnections() {
 			
-		String [] args = {"-r","rrd", "-ac"};
+		String [] args = {"-r","rrd", "-ac", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -51,7 +53,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testActiveThreads() {
 			
-		String [] args = {"-r","rrd", "-at"};
+		String [] args = {"-r","rrd", "-at", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -63,7 +65,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testGarbageCollection() {
 			
-		String [] args = {"-r","rrd", "-gc"};
+		String [] args = {"-r","rrd", "-gc", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -75,7 +77,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testHttpHitRate() {
 			
-		String [] args = {"-r","rrd", "-hr"};
+		String [] args = {"-r","rrd", "-hr", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -87,7 +89,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testHttpMeanTime() {
 			
-		String [] args = {"-r","rrd", "-hmt"};
+		String [] args = {"-r","rrd", "-hmt", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -99,7 +101,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testHttpSessions() {
 			
-		String [] args = {"-r","rrd", "-hs"};
+		String [] args = {"-r","rrd", "-hs", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -111,7 +113,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testHttpSystemErrors() {
 			
-		String [] args = {"-r","rrd", "-he"};
+		String [] args = {"-r","rrd", "-he", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -123,7 +125,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testLoadedClassCount() {
 			
-		String [] args = {"-r","rrd", "-lcc"};
+		String [] args = {"-r","rrd", "-lcc", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -135,7 +137,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testSqlHitRate() {
 			
-		String [] args = {"-r","rrd", "-shr"};
+		String [] args = {"-r","rrd", "-shr", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -147,7 +149,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testSqlMeanTime() {
 			
-		String [] args = {"-r","rrd", "-smt"};
+		String [] args = {"-r","rrd", "-smt", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -159,7 +161,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testSqlError() {
 			
-		String [] args = {"-r","rrd", "-sse"};
+		String [] args = {"-r","rrd", "-sse", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -171,7 +173,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testThradCount() {
 			
-		String [] args = {"-r","rrd", "-tc"};
+		String [] args = {"-r","rrd", "-tc", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -183,7 +185,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testUsedConnections() {
 			
-		String [] args = {"-r","rrd", "-uc"};
+		String [] args = {"-r","rrd", "-uc", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -195,7 +197,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testUsedHeap() {
 			
-		String [] args = {"-r","rrd", "-uh"};
+		String [] args = {"-r","rrd", "-uh", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -207,7 +209,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testUsedNonHeap() {
 			
-		String [] args = {"-r","rrd", "-unh"};
+		String [] args = {"-r","rrd", "-unh", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -219,7 +221,7 @@ public class TestCheckJMelody {
 	@Test
 	public void testUsedNonHeapWarning() {
 			
-		String [] args = {"-r","rrd", "-unh", "-w", "182845760", "-c", "282845768"};
+		String [] args = {"-r","rrd", "-unh", "-w", "182845760", "-c", "282845768", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
@@ -231,13 +233,39 @@ public class TestCheckJMelody {
 	@Test
 	public void testUsedNonHeapCritical() {
 			
-		String [] args = {"-r","rrd", "-unh", "-w", "182845700", "-c", "182845760"};
+		String [] args = {"-r","rrd", "-unh", "-w", "182845700", "-c", "182845760", "-s"};
 				
 		CheckJMelody cm = new CheckJMelody();
 		int retVal = cm.checkRRD(args);
 		
 		assertEquals(usedNonHeapMemoryCritical, outContent.toString());
 		assertEquals(2,retVal);
+	}
+	
+	@Test
+	public void testFileAgeOld() {
+			
+		String [] args = {"-r","rrd", "-unh"};
+				
+		CheckJMelody cm = new CheckJMelody();
+		int retVal = cm.checkRRD(args);
+		
+		assertEquals(CheckJMelody.FILE_AGE_MESSAGE + "\n", outContent.toString());
+		assertEquals(3,retVal);
+	}
+	
+	@Test
+	public void testFileAgeNew() {
+			
+		String [] args = {"-r","rrd", "-tc"};
+		File f = new File("rrd/threadCount.rrd");
+		f.setLastModified(new Date().getTime());
+		
+		CheckJMelody cm = new CheckJMelody();
+		int retVal = cm.checkRRD(args);
+		
+		assertEquals(threadCount, outContent.toString());
+		assertEquals(0,retVal);
 	}
 	
 	@Test

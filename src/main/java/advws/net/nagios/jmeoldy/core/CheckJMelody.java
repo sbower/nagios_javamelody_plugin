@@ -1,13 +1,17 @@
 package advws.net.nagios.jmeoldy.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.jrobin.core.*;
 import advws.net.nagios.jmeoldy.util.SimpleCommandLineParser;
 
 public class CheckJMelody {
 
+	private final static long FILE_AGE = 1000 * 60 * 30;
+	public final static String FILE_AGE_MESSAGE = "File is more than 30 minutes old";
 	
 	private final static String ACTIVE_CONNECTIONS = "activeConnections"; 		//activeConnections
 	private final static String ACTIVE_THREADS = "activeThreads";         		//activeThreads
@@ -44,6 +48,7 @@ public class CheckJMelody {
 		boolean usedConnections = parser.containsKey("usedconnections", "uc");
 		boolean usedHeap = parser.containsKey("heap", "uh");
 		boolean usedNonHeap = parser.containsKey("nonheap", "unh");
+		boolean suppressFileAge = parser.containsKey("suppress", "s");
 		
 		double warning = 0;
 		double critical = 0;
@@ -89,8 +94,21 @@ public class CheckJMelody {
 			} else if (usedNonHeap) {
 				dsName = USED_NON_HEAP_MEMORY;
 			}
-		
-			RrdDb db = new RrdDb(rrdPath + "/" + dsName + ".rrd");
+			
+            File f = new File(rrdPath + "/" + dsName + ".rrd");
+            
+            if (!suppressFileAge) {
+                long lastModified = f.lastModified();
+                long now = new Date().getTime();
+                
+                if (now - lastModified > FILE_AGE) {
+                	System.out.println(FILE_AGE_MESSAGE);
+                	return 3;
+                }
+            }
+
+            
+			RrdDb db = new RrdDb(f);
 			double value = db.getLastDatasourceValue(dsName);
 			
 			String textOutput = dsName + " - " + convertDoubleToString(value);
