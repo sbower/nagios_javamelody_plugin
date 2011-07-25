@@ -30,7 +30,7 @@ $ARG2$ -- critical level <br />
 $ARG3$ -- war name (Verify this in your tomcat temp folder) <br />
 
 ```
-# 'check_locale_heap' command definition
+# 'check_local_heap' command definition
 define command{
         command_name    check_heap
         command_line    $USER1$/check_jmelody -r /usr/local/tomcat/temp/javamelody/$ARG3$/ -uh -w $ARG1$ -c $ARG2$
@@ -51,7 +51,8 @@ define command{
 
 Then you will need to define a service in your host definition
 
-```# Heap
+```
+# Heap
 define service{
         use                             remote-service,graphed-service         ; Name of service template to use
         host_name                       hostname 
